@@ -1,11 +1,11 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { exerciseOptions, fetchData } from "../utils/fetchData";
+import HorizontalScrollBar from "./HorizontalScrollBar";
 
 // функция поиска упражнений
-const SearchExercises = () => {
+const SearchExercises = ({bodyPart,setBodyPart,setExercises}) => {
   const [search, setSearch] = useState("");
-  const [exercise, setExercises] = useState([]);
   const [bodyParts, setBodyParts] = useState([]);
 
   useEffect(() => {
@@ -32,10 +32,10 @@ const SearchExercises = () => {
       // описываю поиск по разным запросам для точного поиска о результатах
       const searchedExercises = exerciseData.filter(
         () =>
-          exercise.name.toLocaleLowerCase().includes(search) ||
-          exercise.target.toLocaleLowerCase().includes(search) ||
-          exercise.bodyPart.toLocaleLowerCase().includes(search) ||
-          exercise.equipment.toLocaleLowerCase().includes(search)
+          exercise.name.toLowerCase().includes(search) ||
+          exercise.target.toLowerCase().includes(search) ||
+          exercise.bodyPart.toLowerCase().includes(search) ||
+          exercise.equipment.toLowerCase().includes(search)
       );
       setSearch("");
       setExercises(searchedExercises);
@@ -62,7 +62,7 @@ const SearchExercises = () => {
           height="76px"
           value={search}
           onChange={(e) => {
-            setSearch(e.target.value.toLocaleLowerCase());
+            setSearch(e.target.value.toLowerCase());
           }}
           placeholder="Search Exercises..."
           type="text"
@@ -83,6 +83,9 @@ const SearchExercises = () => {
         >
           Search
         </Button>
+      </Box>
+      <Box sx={{position:"relative" , width: "100%", p: "20px"}}>
+<HorizontalScrollBar data={bodyParts} bodyPart={bodyPart} setBodyPart={setBodyPart}/>
       </Box>
     </Stack>
   );
