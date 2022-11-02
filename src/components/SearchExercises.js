@@ -1,7 +1,46 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { exerciseOptions, fetchData } from "../utils/fetchData";
 
+// функция поиска упражнений
 const SearchExercises = () => {
+  const [search, setSearch] = useState("");
+  const [exercise, setExercises] = useState([]);
+  const [bodyParts, setBodyParts] = useState([]);
+
+  useEffect(() => {
+    const fetchExercisesData = async () => {
+      // асинхронная функ на получение всех частей тела
+      const bodyPartsData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+        exerciseOptions
+      );
+      // получение всех частей тела 
+      setBodyParts(["all", ...bodyPartsData]);
+    };
+    // сразу отабражаю данные о всех частях тела
+    fetchExercisesData()
+  }, []);
+
+  // функция обработки поиска
+  const handleSearch = async () => {
+    if (search) {
+      const exerciseData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises",
+        exerciseOptions
+      );
+      // описываю поиск по разным запросам для точного поиска о результатах
+      const searchedExercises = exerciseData.filter(
+        () =>
+          exercise.name.toLocaleLowerCase().includes(search) ||
+          exercise.target.toLocaleLowerCase().includes(search) ||
+          exercise.bodyPart.toLocaleLowerCase().includes(search) ||
+          exercise.equipment.toLocaleLowerCase().includes(search)
+      );
+      setSearch("");
+      setExercises(searchedExercises);
+    }
+  };
   return (
     <Stack alignItems="center" mt="37px" p="20px">
       <Typography
@@ -21,8 +60,10 @@ const SearchExercises = () => {
             borderRadius: "40px",
           }}
           height="76px"
-          value=""
-          onChange={(e) => {}}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value.toLocaleLowerCase());
+          }}
           placeholder="Search Exercises..."
           type="text"
         />
@@ -31,13 +72,14 @@ const SearchExercises = () => {
           sx={{
             bgcolor: "#FF2625",
             color: "#fff",
-            textTransform:"none",
-            width: {lg: "175px", xs: "80px"},
-            fontSize: {lg:"20px", xs: "14px"},
+            textTransform: "none",
+            width: { lg: "175px", xs: "80px" },
+            fontSize: { lg: "20px", xs: "14px" },
             height: "56px",
             position: "absolute",
-            right: "0"
+            right: "0",
           }}
+          onClick={handleSearch}
         >
           Search
         </Button>
