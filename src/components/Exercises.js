@@ -27,7 +27,7 @@ const Exercises = ({ exercises, setExercises, podyPart }) => {
         sx={{ gap: { lg: "110px", xs: "50px" } }}
         flexWrap="wrap"
         justifyContent="center"
-      >
+      > 
         {currentExercises.map((exercise, index) => (
           <ExerciseCard key={index} exercise={exercise} />
         ))}
