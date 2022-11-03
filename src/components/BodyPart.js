@@ -20,7 +20,8 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
         gap: "47px",
       }}
       onClick={() => {
-        setBodyPart(item)
+        setBodyPart(item);
+        window.scrollTo({top:1800 , left: 100, behavior: "smooth"})
       }}
     >
       <img
@@ -33,7 +34,9 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
         fontWeight="bolt"
         color="#3A1212"
         textTransform="capitalize"
-      >{item}</Typography>
+      >
+        {item}
+      </Typography>
     </Stack>
   );
 };
