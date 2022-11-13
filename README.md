@@ -1,4 +1,12 @@
-# project-fitness-app-react-mui-Rapid API
+# project-fitness
+В этом проекте я использовал :
+- Vite
+- React js
+- MUI
+- react-router-dom
+- react-loader-spinner
+- react-horizontal-scrolling-menu
+- Rapid API
 
 ![header](https://user-images.githubusercontent.com/90722666/200190986-9bb05845-62cf-42e7-a51e-2789f2ee3cdf.png)
 ![body](https://user-images.githubusercontent.com/90722666/200190993-389d7ca2-95db-46bd-a845-9e6ccf4fbd48.png)
